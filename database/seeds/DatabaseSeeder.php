@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\Models\User;
+use Illuminate\Database\Eloquent\Model;
 
 class DatabaseSeeder extends Seeder
 {
@@ -12,13 +12,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $users = factory(User::class)->times(50)->make();
-        User::insert($users->makeVisible(['password', 'remember_token'])->toArray());
+        Model::unguard();
 
-        $user = User::find(1);
-        $user->name = 'zyt';
-        $user->email = 'zhengyetao@126.com';
-        $user->save();
-        // $this->call(UsersTableSeeder::class);
+        $this->call(UsersTableSeeder::class);
+
+        Model::reguard();
     }
 }
